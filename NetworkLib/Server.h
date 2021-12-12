@@ -11,11 +11,12 @@ class Server
 public:
 	Server(short port, int recvBufferSize);
 	void start();
-	void loop();
 
 	virtual void onAccept(SOCKET clientSocket) = 0;
 	virtual void onRecv(SOCKET clientSocket, char *buffer, int recvSize) = 0;
 	virtual void onClose(SOCKET clientSocket) = 0;
+
+	std::thread *getLoopThread();
 
 private:
 	short port;
@@ -28,6 +29,8 @@ private:
 	int socketCount;
 	SOCKET sockets[WSA_MAXIMUM_WAIT_EVENTS];
 	WSAEVENT socketEvents[WSA_MAXIMUM_WAIT_EVENTS];
+
+	void loop();
 
 	void _onAccept(int index);
 	void _onRecv(int index);

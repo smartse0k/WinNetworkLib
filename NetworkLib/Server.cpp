@@ -70,6 +70,11 @@ void Server::loop()
 	}
 }
 
+std::thread *Server::getLoopThread()
+{
+	return this->loopThread;
+}
+
 void Server::_onAccept(int index)
 {
 	sockaddr_in socketAddress;
